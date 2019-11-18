@@ -36,7 +36,7 @@
 
 ### 在线demo
 * 账号密码：admin/111111，地址：http://demo.stylefeng.cn
-* 阿里云双十一特惠，1C2G 86/年 [点我领取](https://www.aliyun.com/1111/2019/group-buying-share?ptCode=CFCF7A45B182263D40A14DAAB0B30EFD647C88CF896EF535&userCode=p4kqz45e&share_source=copy_link)
+* 2019开源软件评选，请为Guns投票！ [点我投票](https://www.oschina.net/project/top_cn_2019#guns)
 
 ### 最新免费教程
 [https://www.bilibili.com/video/av56718207](https://www.bilibili.com/video/av56718207)
