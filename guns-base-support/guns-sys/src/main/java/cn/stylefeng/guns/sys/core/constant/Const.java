@@ -15,10 +15,6 @@
  */
 package cn.stylefeng.guns.sys.core.constant;
 
-import cn.hutool.core.collection.CollectionUtil;
-
-import java.util.List;
-
 /**
  * 系统常量
  *
@@ -41,20 +37,5 @@ public interface Const {
      * 超级管理员角色id
      */
     Long ADMIN_ROLE_ID = 1L;
-
-    /**
-     * 不需要权限验证的资源表达式
-     */
-    List<String> NONE_PERMISSION_RES = CollectionUtil.newLinkedList(
-            "/assets/**",
-            "/gunsApi/**",
-            "/login",
-            "/global/sessionError",
-            "/kaptcha",
-            "/error",
-            "/global/error",
-            "/oauth/**",
-            "/tran/**",
-            "/favicon.ico");
 
 }

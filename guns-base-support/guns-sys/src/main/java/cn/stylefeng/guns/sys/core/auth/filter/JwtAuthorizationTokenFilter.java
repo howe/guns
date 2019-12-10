@@ -99,6 +99,7 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
                 }
 
                 //跳转到登录超时
+                response.setHeader("Guns-Session-Timeout", "true");
                 request.getRequestDispatcher("/global/sessionError").forward(request, response);
 
                 return;

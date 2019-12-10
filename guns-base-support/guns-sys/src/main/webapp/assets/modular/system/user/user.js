@@ -143,7 +143,7 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
             var ajax = new $ax(Feng.ctxPath + "/mgr/reset", function (data) {
                 Feng.success("重置密码成功!");
             }, function (data) {
-                Feng.error("重置密码失败!");
+                Feng.error("重置密码失败!" + data.responseJSON.message + "!");
             });
             ajax.set("userId", data.userId);
             ajax.start();

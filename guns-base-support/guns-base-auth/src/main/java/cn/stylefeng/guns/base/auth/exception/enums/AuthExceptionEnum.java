@@ -24,7 +24,9 @@ public enum AuthExceptionEnum implements AbstractBaseExceptionEnum {
 
     VALID_CODE_ERROR(1406, "验证码错误"),
 
-    NO_PERMISSION(1500, "没有权限访问资源");
+    NO_PERMISSION(1500, "没有权限访问资源"),
+
+    SESSION_TIMEOUT(1501, "登录会话超时");
 
     AuthExceptionEnum(int code, String message) {
         this.code = code;
