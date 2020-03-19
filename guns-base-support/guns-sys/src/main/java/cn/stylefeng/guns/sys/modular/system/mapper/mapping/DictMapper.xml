@@ -36,33 +36,12 @@
 		) as "open" from sys_dict where dict_type_id = #{dictTypeId}
     </select>
 
-    <select id="dictTree" resultType="cn.stylefeng.guns.base.pojo.node.ZTreeNode" databaseId="oracle">
-        select dict_id AS id, parent_id as "pId", name as name,
-		(
-		CASE
-		WHEN (parent_id = 0 OR parent_id IS NULL) THEN
-		'1'
-		ELSE
-		'0'
-		END
-		) as "open" from sys_dict where dict_type_id = #{dictTypeId}
-    </select>
-
     <select id="likeParentIds" resultType="cn.stylefeng.guns.sys.modular.system.entity.Dict">
         select
         <include refid="Base_Column_List"></include>
         from sys_dict where 1 = 1
         <if test="dictId != null and dictId != ''">
             and parent_ids LIKE CONCAT('%$[',#{dictId},'$]%') escape '$'
-        </if>
-    </select>
-
-    <select id="likeParentIds" resultType="cn.stylefeng.guns.sys.modular.system.entity.Dict" databaseId="oracle">
-        select
-        <include refid="Base_Column_List"></include>
-        from sys_dict where 1 = 1
-        <if test="dictId != null and dictId != ''">
-            and parent_ids LIKE '%$[' || #{dictId} || ']%'
         </if>
     </select>
 

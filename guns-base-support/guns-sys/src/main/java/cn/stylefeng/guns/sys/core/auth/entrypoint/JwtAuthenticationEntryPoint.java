@@ -1,7 +1,7 @@
 package cn.stylefeng.guns.sys.core.auth.entrypoint;
 
 import cn.stylefeng.guns.base.auth.exception.enums.AuthExceptionEnum;
-import cn.stylefeng.roses.core.reqres.response.ErrorResponseData;
+import cn.stylefeng.roses.kernel.model.response.ErrorResponseData;
 import com.alibaba.fastjson.JSON;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -14,6 +14,8 @@ import java.io.Serializable;
 
 /**
  * 这个端点用在用户访问受保护资源但是不提供任何token的情况下
+ * <p>
+ * 当前用户没有登录（没有token），访问了系统中的一些需要权限的接口，就会进入这个处理器
  *
  * @author fengshuonan
  * @Date 2019/7/20 17:57
@@ -41,7 +43,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
             response.setContentType("application/json");
 
             ErrorResponseData errorResponseData = new ErrorResponseData(
-                    AuthExceptionEnum.NO_PERMISSION.getCode(), AuthExceptionEnum.NO_PERMISSION.getMessage());
+                    AuthExceptionEnum.NO_PAGE_ERROR.getCode(), AuthExceptionEnum.NO_PAGE_ERROR.getMessage());
 
             response.getWriter().write(JSON.toJSONString(errorResponseData));
         }

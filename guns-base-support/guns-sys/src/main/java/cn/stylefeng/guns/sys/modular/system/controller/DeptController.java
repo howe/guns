@@ -32,10 +32,8 @@ import cn.stylefeng.guns.sys.modular.system.service.DeptService;
 import cn.stylefeng.guns.sys.modular.system.warpper.DeptTreeWrapper;
 import cn.stylefeng.guns.sys.modular.system.warpper.DeptWrapper;
 import cn.stylefeng.roses.core.base.controller.BaseController;
-import cn.stylefeng.roses.core.reqres.response.ResponseData;
 import cn.stylefeng.roses.core.treebuild.DefaultTreeBuildFactory;
-import cn.stylefeng.roses.core.util.ToolUtil;
-import cn.stylefeng.roses.kernel.model.exception.RequestEmptyException;
+import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,6 +42,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -93,12 +92,6 @@ public class DeptController extends BaseController {
     @Permission
     @RequestMapping("/dept_update")
     public String deptUpdate(@RequestParam("deptId") Long deptId) {
-
-        if (ToolUtil.isEmpty(deptId)) {
-            throw new RequestEmptyException();
-        }
-
-        //缓存部门修改前详细信息
         Dept dept = deptService.getById(deptId);
         LogObjectHolder.me().set(dept);
 
@@ -169,7 +162,7 @@ public class DeptController extends BaseController {
     @RequestMapping(value = "/add")
     @Permission
     @ResponseBody
-    public ResponseData add(Dept dept) {
+    public ResponseData add(@Valid Dept dept) {
         this.deptService.addDept(dept);
         return SUCCESS_TIP;
     }
@@ -217,7 +210,7 @@ public class DeptController extends BaseController {
     @RequestMapping(value = "/update")
     @Permission
     @ResponseBody
-    public ResponseData update(Dept dept) {
+    public ResponseData update(@Valid Dept dept) {
         deptService.editDept(dept);
         return SUCCESS_TIP;
     }
@@ -232,7 +225,7 @@ public class DeptController extends BaseController {
     @RequestMapping(value = "/delete")
     @Permission
     @ResponseBody
-    public ResponseData delete(@RequestParam Long deptId) {
+    public ResponseData delete(@RequestParam("deptId") Long deptId) {
 
         //缓存被删除的部门名称
         LogObjectHolder.me().set(ConstantFactory.me().getDeptName(deptId));

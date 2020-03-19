@@ -2,6 +2,8 @@ package cn.stylefeng.guns.sys.modular.system.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -28,6 +30,7 @@ public class Dept implements Serializable {
      * 父部门id
      */
     @TableField("pid")
+    @NotNull
     private Long pid;
 
     /**
@@ -40,12 +43,14 @@ public class Dept implements Serializable {
      * 简称
      */
     @TableField("simple_name")
+    @NotBlank
     private String simpleName;
 
     /**
      * 全称
      */
     @TableField("full_name")
+    @NotBlank
     private String fullName;
 
     /**

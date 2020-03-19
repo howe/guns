@@ -35,13 +35,31 @@
         </if>
     </select>
 
+    <select id="getOperationLogs" resultType="map" databaseId="pgsql">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_operation_log where 1 = 1
+        <if test="beginTime != null and beginTime !='' ">
+            and create_time &gt;= to_timestamp(#{beginTime}||' 00:00:00','yyyy-mm-dd hh24:mi:ss')
+        </if>
+       <if test="endTime != null and endTime != '' ">
+            and create_time &lt;= to_timestamp(#{endTime}||' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+        </if>
+        <if test="logName != null and logName !=''">
+            and log_name like '%' || #{logName} || '%'
+        </if>
+        <if test="logType != null and logType !=''">
+            and log_type like '%' || #{logType} || '%'
+        </if>
+    </select>
+
     <select id="getOperationLogs" resultType="map" databaseId="oracle">
         select
         <include refid="Base_Column_List"/>
         from sys_operation_log where 1 = 1
         <if test="beginTime != null and beginTime !='' and endTime != null and endTime != ''">
-            and create_time &gt;= to_date(#{beginTime}||'00:00:00','yyyy-mm-dd hh24:mi:ss')
-            and create_time &lt;= to_date(#{endTime}||'23:59:59','yyyy-mm-dd hh24:mi:ss')
+            and create_time &gt;= to_date(#{beginTime}||' 00:00:00','yyyy-mm-dd hh24:mi:ss')
+            and create_time &lt;= to_date(#{endTime}||' 23:59:59','yyyy-mm-dd hh24:mi:ss')
         </if>
         <if test="logName != null and logName !=''">
             and log_name like '%' || #{logName} || '%'

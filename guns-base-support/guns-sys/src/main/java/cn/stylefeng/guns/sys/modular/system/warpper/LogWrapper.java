@@ -15,11 +15,13 @@
  */
 package cn.stylefeng.guns.sys.modular.system.warpper;
 
+import cn.stylefeng.guns.base.db.util.ClobUtil;
 import cn.stylefeng.guns.sys.core.constant.factory.ConstantFactory;
 import cn.stylefeng.guns.sys.core.util.Contrast;
 import cn.stylefeng.guns.sys.core.util.DecimalUtil;
 import cn.stylefeng.roses.core.base.warpper.BaseControllerWrapper;
 import cn.stylefeng.roses.core.util.ToolUtil;
+import com.alibaba.druid.proxy.jdbc.ClobProxyImpl;
 
 import java.util.List;
 import java.util.Map;
@@ -42,7 +44,16 @@ public class LogWrapper extends BaseControllerWrapper {
 
     @Override
     protected void wrapTheMap(Map<String, Object> map) {
-        String message = (String) map.get("message");
+
+        String message = "";
+
+        Object messageObj = map.get("message");
+        if (messageObj instanceof ClobProxyImpl) {
+            ClobProxyImpl clobProxy = (ClobProxyImpl) messageObj;
+            message = ClobUtil.clobToString(clobProxy.getRawClob());
+        } else {
+            message = (String) messageObj;
+        }
 
         Long userid = DecimalUtil.getLong(map.get("userId"));
         map.put("userName", ConstantFactory.me().getUserNameById(userid));

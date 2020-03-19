@@ -44,12 +44,7 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax', 'func'], function () {
      * 弹出添加通知
      */
     Notice.openAddNotice = function () {
-        func.open({
-            height: 420,
-            title: '添加通知',
-            content: Feng.ctxPath + '/notice/notice_add',
-            tableId: Notice.tableId
-        });
+        window.location.href = Feng.ctxPath + '/notice/notice_add';
     };
 
     /**
@@ -58,12 +53,7 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax', 'func'], function () {
      * @param data 点击按钮时候的行数据
      */
     Notice.onEditNotice = function (data) {
-        func.open({
-            height: 420,
-            title: '修改通知',
-            content: Feng.ctxPath + "/notice/notice_update/" + data.noticeId,
-            tableId: Notice.tableId
-        });
+        window.location.href = Feng.ctxPath + "/notice/notice_update?noticeId=" + data.noticeId;
     };
 
     /**

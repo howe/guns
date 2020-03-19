@@ -6,7 +6,7 @@
 
     <parent>
         <groupId>cn.stylefeng</groupId>
-        <artifactId>guns-architecture</artifactId>
+        <artifactId>guns-vip</artifactId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -19,6 +19,7 @@
         <module>guns-base</module>
         <module>guns-base-auth</module>
         <module>guns-sys</module>
+        <module>guns-dbctn</module>
     </modules>
 
 </project>

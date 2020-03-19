@@ -79,6 +79,46 @@
         </where>
     </select>
 
+    <select id="customPageList" resultType="cn.stylefeng.guns.sys.modular.consts.model.result.SysConfigResult" parameterType="cn.stylefeng.guns.sys.modular.consts.model.params.SysConfigParam" databaseId="pgsql">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_config
+        <where>
+            <if test="paramCondition.name != null and paramCondition.name != ''">
+                name like '%' || #{paramCondition.name} || '%'
+            </if>
+            <if test="paramCondition.code != null and paramCondition.code != ''">
+                or code like '%' || #{paramCondition.code} || '%'
+            </if>
+            <if test="paramCondition.value != null and paramCondition.value != ''">
+                or value like '%' || #{paramCondition.value} || '%'
+            </if>
+            <if test="paramCondition.remark != null and paramCondition.remark != ''">
+                or remark like '%' || #{paramCondition.remark} || '%'
+            </if>
+        </where>
+    </select>
+
+    <select id="customPageList" resultType="cn.stylefeng.guns.sys.modular.consts.model.result.SysConfigResult" parameterType="cn.stylefeng.guns.sys.modular.consts.model.params.SysConfigParam" databaseId="oracle">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_config
+        <where>
+            <if test="paramCondition.name != null and paramCondition.name != ''">
+                name like '%' || #{paramCondition.name} || '%'
+            </if>
+            <if test="paramCondition.code != null and paramCondition.code != ''">
+                or code like '%' || #{paramCondition.code} || '%'
+            </if>
+            <if test="paramCondition.value != null and paramCondition.value != ''">
+                or value like '%' || #{paramCondition.value} || '%'
+            </if>
+            <if test="paramCondition.remark != null and paramCondition.remark != ''">
+                or remark like '%' || #{paramCondition.remark} || '%'
+            </if>
+        </where>
+    </select>
+
     <select id="customPageMapList" resultType="map" parameterType="cn.stylefeng.guns.sys.modular.consts.model.params.SysConfigParam">
         select
         <include refid="Base_Column_List"/>

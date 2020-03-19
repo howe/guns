@@ -26,17 +26,21 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
      * 初始化表格的列
      */
     MgrUser.initColumn = function () {
+
+        //获取多语言
+        var langs = layui.data('system').lang;
+
         return [[
             {type: 'checkbox'},
             {field: 'userId', hide: true, sort: true, title: '用户id'},
-            {field: 'account', align: "center", sort: true, title: '账号'},
-            {field: 'name', align: "center", sort: true, title: '姓名'},
-            {field: 'deptName', align: "center", sort: true, title: '部门'},
-            {field: 'positionName', align: "center", sort: true, title: '职位'},
-            {field: 'phone', align: "center", sort: true, title: '电话', minWidth: 117},
-            {field: 'createTime', align: "center", sort: true, title: '创建时间', minWidth: 160},
-            {field: 'status', align: "center", sort: true, templet: '#statusTpl', title: '状态'},
-            {align: 'center', toolbar: '#tableBar', title: '操作', minWidth: 280}
+            {field: 'account', align: "center", sort: true, title: langs.FIELD_ACCOUNT},
+            {field: 'name', align: "center", sort: true, title: langs.FIELD_NAME},
+            {field: 'deptName', align: "center", sort: true, title: langs.FIELD_DEPT},
+            {field: 'positionName', align: "center", sort: true, title: langs.FIELD_POST},
+            {field: 'phone', align: "center", sort: true, title: langs.FIELD_PHONE, minWidth: 117},
+            {field: 'createTime', align: "center", sort: true, title: langs.FIELD_CREATE_TIME, minWidth: 160},
+            {field: 'status', align: "center", sort: true, templet: '#statusTpl', title: langs.FIELD_STATUS},
+            {align: 'center', toolbar: '#tableBar', title: langs.FIELD_OPERATION, minWidth: 480}
         ]];
     };
 
@@ -65,8 +69,12 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
      * 弹出添加用户对话框
      */
     MgrUser.openAddUser = function () {
+
+        //获取多语言
+        var langs = layui.data('system').lang;
+
         func.open({
-            title: '添加用户',
+            title: langs.TITLE_ADD_USER,
             content: Feng.ctxPath + '/mgr/user_add',
             tableId: MgrUser.tableId
         });
@@ -78,8 +86,12 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
      * @param data 点击按钮时候的行数据
      */
     MgrUser.onEditUser = function (data) {
+
+        //获取多语言
+        var langs = layui.data('system').lang;
+
         func.open({
-            title: '编辑用户',
+            title: langs.TITLE_EDIT_USER,
             content: Feng.ctxPath + '/mgr/user_edit?userId=' + data.userId,
             tableId: MgrUser.tableId
         });
@@ -122,9 +134,13 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax', 'func', 
      * @param data 点击按钮时候的行数据
      */
     MgrUser.roleAssign = function (data) {
+
+        //获取多语言
+        var langs = layui.data('system').lang;
+
         layer.open({
             type: 2,
-            title: '角色分配',
+            title: langs.TITLE_ROLE_ASSIGN,
             area: ['300px', '400px'],
             content: Feng.ctxPath + '/mgr/role_assign?userId=' + data.userId,
             end: function () {

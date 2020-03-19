@@ -11,17 +11,17 @@
     </parent>
 
     <groupId>cn.stylefeng</groupId>
-    <artifactId>guns-architecture</artifactId>
+    <artifactId>guns-vip</artifactId>
     <version>1.0.0</version>
 
-    <name>guns-architecture</name>
-    <description>guns开源版本6.0</description>
+    <name>guns-vip</name>
+    <description>guns开源版</description>
 
     <packaging>pom</packaging>
 
     <modules>
         <module>guns-base-support</module>
-        <module>guns-main</module>
+        <module>guns-vip-main</module>
     </modules>
 
     <properties>
@@ -40,6 +40,8 @@
         <just.auth.version>1.9.5</just.auth.version>
         <activiti.version>6.0.0</activiti.version>
         <batik.version>1.7</batik.version>
+        <docker.img.version>latest</docker.img.version>
+        <kernel.version>2.2.12</kernel.version>
     </properties>
 
     <dependencyManagement>
@@ -50,7 +52,17 @@
             <dependency>
                 <groupId>cn.stylefeng.roses</groupId>
                 <artifactId>kernel-core</artifactId>
-                <version>1.2.6</version>
+                <version>${kernel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.stylefeng.roses</groupId>
+                <artifactId>kernel-validator</artifactId>
+                <version>${kernel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.stylefeng.roses</groupId>
+                <artifactId>kernel-excel</artifactId>
+                <version>${kernel.version}</version>
             </dependency>
 
             <!--数据库驱动,可根据自己需要自行删减-->
@@ -59,21 +71,21 @@
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-connector-java.version}</version>
             </dependency>
-            <!--            <dependency>-->
-            <!--                <groupId>net.sourceforge.jtds</groupId>-->
-            <!--                <artifactId>jtds</artifactId>-->
-            <!--                <version>${sqlserver.version}</version>-->
-            <!--            </dependency>-->
-            <!--            <dependency>-->
-            <!--                <groupId>com.oracle</groupId>-->
-            <!--                <artifactId>ojdbc6</artifactId>-->
-            <!--                <version>${oracle.version}</version>-->
-            <!--            </dependency>-->
-            <!--            <dependency>-->
-            <!--                <groupId>org.postgresql</groupId>-->
-            <!--                <artifactId>postgresql</artifactId>-->
-            <!--                <version>${pgsql.version}</version>-->
-            <!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>net.sourceforge.jtds</groupId>-->
+<!--                <artifactId>jtds</artifactId>-->
+<!--                <version>${sqlserver.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.oracle</groupId>-->
+<!--                <artifactId>ojdbc6</artifactId>-->
+<!--                <version>${oracle.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.postgresql</groupId>-->
+<!--                <artifactId>postgresql</artifactId>-->
+<!--                <version>${pgsql.version}</version>-->
+<!--            </dependency>-->
 
             <!--beetl模板引擎-->
             <dependency>

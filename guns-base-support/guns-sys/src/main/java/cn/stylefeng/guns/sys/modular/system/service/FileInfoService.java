@@ -1,6 +1,7 @@
 package cn.stylefeng.guns.sys.modular.system.service;
 
 import cn.hutool.core.codec.Base64;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.stylefeng.guns.base.auth.context.LoginContextHolder;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
@@ -14,6 +15,7 @@ import cn.stylefeng.guns.sys.modular.system.model.UploadResult;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import cn.stylefeng.roses.kernel.model.exception.enums.CoreExceptionEnum;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -143,6 +145,11 @@ public class FileInfoService extends ServiceImpl<FileInfoMapper, FileInfo> {
         try {
             //保存文件到指定目录
             File newFile = new File(fileSavePath + finalName);
+
+            //创建父目录
+            FileUtil.mkParentDirs(newFile);
+
+            //保存文件
             file.transferTo(newFile);
 
             //保存文件信息
@@ -165,6 +172,19 @@ public class FileInfoService extends ServiceImpl<FileInfoMapper, FileInfo> {
         }
 
         return uploadResult;
+    }
 
+    /**
+     * 根据文件的最终命名获取文件信息
+     *
+     * @author fengshuonan
+     * @Date 2020/1/1 16:48
+     */
+    public FileInfo getByFinalName(String finalName) {
+
+        QueryWrapper<FileInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("final_name", finalName);
+
+        return this.getOne(queryWrapper);
     }
 }

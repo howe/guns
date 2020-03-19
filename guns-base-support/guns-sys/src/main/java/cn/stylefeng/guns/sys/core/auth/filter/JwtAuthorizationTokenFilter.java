@@ -2,6 +2,7 @@ package cn.stylefeng.guns.sys.core.auth.filter;
 
 import cn.stylefeng.guns.base.auth.jwt.JwtTokenUtil;
 import cn.stylefeng.guns.sys.core.auth.cache.SessionManager;
+import cn.stylefeng.guns.sys.core.auth.util.TokenUtil;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,11 @@ import java.io.IOException;
 import static cn.stylefeng.guns.base.consts.ConstantsContext.getTokenHeaderName;
 
 /**
- * jwt token过滤器
+ * 这个过滤器，在所有请求之前，也在spring security filters之前
+ * <p>
+ * 这个过滤器的作用是：接口在进业务之前，添加登录上下文（SecurityContext和LoginContext）
+ * <p>
+ * 因为现在的Guns没有用session了，只能token来校验当前的登录人的身份，所以在进业务之前要给当前登录人设置登录状态
  *
  * @author fengshuonan
  * @Date 2019/7/20 21:33
@@ -39,40 +44,19 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
 
-        //过滤静态资源
-        String[] regs = {"/assets/**", "/favicon.ico", "/activiti-editor/**"};
-        for (String reg : regs) {
+        // 1.静态资源直接过滤，不走此过滤器
+        for (String reg : NoneAuthedResources.FRONTEND_RESOURCES) {
             if (new AntPathMatcher().match(reg, request.getServletPath())) {
                 chain.doFilter(request, response);
                 return;
             }
         }
 
-        //权限校验的头部
-        String tokenHeader = getTokenHeaderName();
-        final String requestHeader = request.getHeader(tokenHeader);
-
-        String username = null;
-        String authToken = null;
-
-        // 1.从cookie中获取token
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (tokenHeader.equals(cookie.getName())) {
-                    authToken = cookie.getValue();
-                }
-            }
-        }
-
-        // 2.如果cookie中没有token，则从header中获取token
-        if (ToolUtil.isEmpty(authToken)) {
-            if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
-                authToken = requestHeader.substring(7);
-            }
-        }
+        // 2.从cookie和header获取token
+        String authToken = TokenUtil.getToken();
 
         // 3.通过token获取用户名
+        String username = null;
         if (ToolUtil.isNotEmpty(authToken)) {
             try {
                 username = JwtTokenUtil.getJwtPayLoad(authToken).getAccount();
@@ -81,34 +65,45 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
             }
         }
 
-        // 4.如果账号不为空，并且没有设置security上下文，就设置上下文
+        // 4.如果账号不为空，并且没有设置security上下文
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            //从缓存中拿userDetails
+            // 5.从缓存中拿userDetails，如果不为空，就设置登录上下文和权限上下文
             UserDetails userDetails = sessionManager.getSession(authToken);
-            if (userDetails == null) {
+            if (userDetails != null) {
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
 
-                //删除cookies
+                chain.doFilter(request, response);
+                return;
+            } else {
+
+                // 6.当用户的token过期了，缓存中没有用户信息，则删除相关cookies
                 Cookie[] tempCookies = request.getCookies();
-                for (Cookie cookie : tempCookies) {
-                    if (tokenHeader.equals(cookie.getName())) {
-                        Cookie temp = new Cookie(cookie.getName(), "");
-                        temp.setMaxAge(0);
-                        response.addCookie(temp);
+                if (tempCookies != null) {
+                    for (Cookie cookie : tempCookies) {
+                        if (getTokenHeaderName().equals(cookie.getName())) {
+                            Cookie temp = new Cookie(cookie.getName(), "");
+                            temp.setMaxAge(0);
+                            temp.setPath("/");
+                            response.addCookie(temp);
+                        }
+                    }
+                }
+
+                //如果是不需要权限校验的接口不需要返回session超时
+                for (String reg : NoneAuthedResources.BACKEND_RESOURCES) {
+                    if (new AntPathMatcher().match(reg, request.getServletPath())) {
+                        chain.doFilter(request, response);
+                        return;
                     }
                 }
 
                 //跳转到登录超时
                 response.setHeader("Guns-Session-Timeout", "true");
                 request.getRequestDispatcher("/global/sessionError").forward(request, response);
-
-                return;
             }
-
-            //创建当前登录上下文
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                    userDetails, null, userDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
         chain.doFilter(request, response);

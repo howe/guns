@@ -22,6 +22,10 @@
             <groupId>cn.stylefeng.roses</groupId>
             <artifactId>kernel-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.stylefeng.roses</groupId>
+            <artifactId>kernel-validator</artifactId>
+        </dependency>
 
         <!--数据库驱动,可根据自己需要自行删减-->
         <dependency>
@@ -88,10 +92,22 @@
             <artifactId>easypoi-web</artifactId>
         </dependency>
 
+        <!--quartz定时任务-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+        </dependency>
+
         <!--验证码-->
         <dependency>
             <groupId>com.github.penggle</groupId>
             <artifactId>kaptcha</artifactId>
+        </dependency>
+
+        <!--多数据源控制-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jta-atomikos</artifactId>
         </dependency>
 
         <!-- 获取系统信息 -->

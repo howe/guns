@@ -150,12 +150,14 @@ public class DictService extends ServiceImpl<DictMapper, Dict> {
 
         List<Dict> list = this.list(objectQueryWrapper);
 
-        //创建根节点
-        Dict dict = new Dict();
-        dict.setName("根节点");
-        dict.setDictId(0L);
-        dict.setParentId(-999L);
-        list.add(dict);
+        //去除根节点为0的
+        if (list.size() > 0) {
+            for (Dict dict : list) {
+                if (dict.getParentId() != null && dict.getParentId().equals(0L)) {
+                    dict.setParentId(null);
+                }
+            }
+        }
 
         LayuiPageInfo result = new LayuiPageInfo();
         result.setData(list);

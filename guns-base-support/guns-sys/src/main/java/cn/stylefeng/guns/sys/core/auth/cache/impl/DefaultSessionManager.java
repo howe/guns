@@ -9,8 +9,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 基于内存的会话管理
- * <p>
- * ps:您可以自行拓展内存管理哦
  *
  * @author fengshuonan
  * @date 2019-09-28-14:43

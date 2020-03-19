@@ -17,6 +17,7 @@ package cn.stylefeng.guns.sys.core.beetl;
 
 import cn.stylefeng.guns.base.auth.context.LoginContext;
 import cn.stylefeng.guns.base.consts.ConstantsContext;
+import cn.stylefeng.guns.base.i18n.context.UserTranslationContext;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
 
@@ -39,5 +40,6 @@ public class BeetlConfiguration extends BeetlGroupUtilConfiguration {
         groupTemplate.registerFunctionPackage("shiro", loginContext);
         groupTemplate.registerFunctionPackage("tool", new ToolUtil());
         groupTemplate.registerFunctionPackage("constants", new ConstantsContext());
+        groupTemplate.registerFunctionPackage("lang", new UserTranslationContext());
     }
 }

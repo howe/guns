@@ -111,20 +111,62 @@
                             <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
                             <div class="layui-timeline-content layui-text">
                                 <h3 class="layui-timeline-title">
-                                    Guns 6.0
+                                    高级企业版 V2.0
                                     <small>更符合企业级开发的管理系统</small>&emsp;
-                                    <span class="layui-badge-rim">2019-10-25</span>
+                                    <span class="layui-badge-rim">2019-10-09</span>
                                 </h3>
                                 <ul>
-                                    <li class="text-danger">前端框架升级easyweb 3.1.5，layui升级2.5.5</li>
-                                    <li class="text-danger">优化整体前端UI界面，更加简洁，大气</li>
-                                    <li class="text-danger">抽象出一套权限模型，利用接口进行权限控制和调用规则，方便在权限控制方面进行拓展</li>
-                                    <li class="text-danger">替换掉了以往的ShiroKit，采用LoginContextHolder.getContext().getUser()获取当前登录用户</li>
-                                    <li class="text-danger">权限框架替换为spring security + jwt，采用令牌登录方式，更加灵活可拓展，同时方便对接多系统SSO</li>
-                                    <li class="text-danger">新增常量容器模型，对系统变量，常量，以及用户自定义的一些参数进行在线维护，在线刷新参数值，无需重启</li>
-                                    <li class="text-danger">系统的验证码开关，顶部导航栏开关，系统默认密码等在常量容器进行维护，极大方便了系统使用</li>
-                                    <li class="text-danger">所有页面加载的css和js进行版本控制，当升级项目时，更新对应版本号，可控制浏览器对缓存js和css的刷新</li>
-                                    <li class="text-danger">增加用户的职务管理，可对用户进行职务绑定</li>
+                                    <li class="text-danger">升级权限框架，采用spring security + jwt</li>
+                                    <li class="text-danger">集成适配新的单点登录接口</li>
+                                    <li class="text-danger">更新代码生成器，可生成带swagger注解的控制器和实体，可生成适用于微服务的api</li>
+                                    <li class="text-danger">增加更多的系统常量在线配置，简化本地配置</li>
+                                    <li class="text-danger">更新整体的弹框和其他组件ui样式</li>
+                                    <li class="text-danger">集成ueditor富文本编辑器到通知管理</li>
+                                    <li class="text-danger">增加工作流相关的模型设计，发起流程，代办已办等功能，并增加在线流程设计器</li>
+                                    <li class="text-danger">升级layui和easyweb到最新版本</li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="layui-timeline-item">
+                            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                            <div class="layui-timeline-content layui-text">
+                                <h3 class="layui-timeline-title">
+                                    企业版 V2.0
+                                    <small>更符合企业级开发的管理系统</small>&emsp;
+                                    <span class="layui-badge-rim">2019-6-20</span>
+                                </h3>
+                                <ul>
+                                    <li>新增基于spring cloud alibaba的全新微服务版本(高级企业版)</li>
+                                    <li>新增多租户系统，采用数据库隔离的方式拓展多租户(高级企业版)</li>
+                                    <li>新增多数据源在线配置，无限拓展，告别繁琐的多数据源配置方式</li>
+                                    <li>新增第三方系统的OAuth2登录，例如qq登录，码云登录等</li>
+                                    <li>新增邮件发送，短信发送功能，短信适配的阿里云短信</li>
+                                    <li>新增系统参数在线配置功能，可实时修改系统的某些开关和配置</li>
+                                    <li>新增分布式job的支持，可通过job控制中心控制分布式任务</li>
+                                    <li>升级并适配easyweb框架到最新版本</li>
+                                    <li>完善系统的验证码，头像上传等功能，优化部分业务的界面</li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="layui-timeline-item">
+                            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                            <div class="layui-timeline-content layui-text">
+                                <h3 class="layui-timeline-title">
+                                    企业版 V1.0
+                                    <small>更符合企业级开发的管理系统</small>&emsp;
+                                    <span class="layui-badge-rim">2019-4-1</span>
+                                </h3>
+                                <ul>
+                                    <li>最新独创领域驱动设计 + 数据驱动模式代码生成器</li>
+                                    <li>完美适配Mysql，Oracle，Sql Server，Postgre SQL多种数据库的支持</li>
+                                    <li>集成最新版flowable v6.4.1，提供使用用例，提供原装在线画图工具</li>
+                                    <li>新增haproxy + keepalived实现负载均衡和高可用的安装配置和相关脚本</li>
+                                    <li>提供接入spring cloud微服务方案，轻松搭建基于Guns的微服务</li>
+                                    <li>集成spring定时任务，quartz定时任务，提供分布式调度解决方案</li>
+                                    <li>新增pdf在线预览功能，提供word，excel，ppt，pdf在线预览</li>
+                                    <li>新增excel导入导出示例，可根据自定义sql进行报表导出</li>
+                                    <li>重构字典模块，系统枚举和字典的全新融合</li>
+                                    <li>新增高级表单demo，高级表格demo，增加文件上传，图片上传，富文本编辑框功能</li>
                                 </ul>
                             </div>
                         </li>
@@ -514,11 +556,11 @@
                         </tr>
                         <tr>
                             <td>开源版本</td>
-                            <td>Guns v6.0</td>
+                            <td>Guns 旗舰版 v2.5</td>
                         </tr>
                         <tr>
                             <td>企业版版</td>
-                            <td>Guns 企业版 v3.0</td>
+                            <td>Guns 企业版 v2.0</td>
                         </tr>
                         <tr>
                             <td>官方地址</td>
@@ -569,11 +611,11 @@
                         <tbody>
                         <tr>
                             <td>基础框架</td>
-                            <td><a href="https://www.layui.com/" target="_blank">layui v2.5.5</a></td>
+                            <td><a href="https://www.layui.com/" target="_blank">layui v2.4.5</a></td>
                         </tr>
                         <tr>
                             <td>基础框架</td>
-                            <td><a href="https://easyweb.vip/" target="_blank">easyweb v3.1.5</a></td>
+                            <td><a href="https://easyweb.vip/" target="_blank">easyweb v3.1.1</a></td>
                         </tr>
                         <tr>
                             <td>树形框架</td>
@@ -616,7 +658,7 @@
                         </tr>
                         <tr>
                             <td>权限框架</td>
-                            <td>Spring Security、JWT(API接口权限)
+                            <td>Shiro、JWT(API接口权限)
                             </td>
                         </tr>
                         <tr>

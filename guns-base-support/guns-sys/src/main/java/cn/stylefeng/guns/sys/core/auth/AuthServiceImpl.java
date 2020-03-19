@@ -24,6 +24,9 @@ import cn.stylefeng.guns.base.auth.jwt.JwtTokenUtil;
 import cn.stylefeng.guns.base.auth.jwt.payload.JwtPayLoad;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.auth.service.AuthService;
+import cn.stylefeng.guns.base.consts.ConstantsContext;
+import cn.stylefeng.guns.base.tenant.context.DataBaseNameHolder;
+import cn.stylefeng.guns.base.tenant.context.TenantCodeHolder;
 import cn.stylefeng.guns.sys.core.auth.cache.SessionManager;
 import cn.stylefeng.guns.sys.core.constant.factory.ConstantFactory;
 import cn.stylefeng.guns.sys.core.constant.state.ManagerStatus;
@@ -152,12 +155,15 @@ public class AuthServiceImpl implements AuthService {
 
         //删除Auth相关cookies
         Cookie[] cookies = HttpContext.getRequest().getCookies();
-        for (Cookie cookie : cookies) {
-            String tokenHeader = getTokenHeaderName();
-            if (tokenHeader.equalsIgnoreCase(cookie.getName())) {
-                Cookie temp = new Cookie(cookie.getName(), "");
-                temp.setMaxAge(0);
-                HttpContext.getResponse().addCookie(temp);
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                String tokenHeader = getTokenHeaderName();
+                if (tokenHeader.equalsIgnoreCase(cookie.getName())) {
+                    Cookie temp = new Cookie(cookie.getName(), "");
+                    temp.setMaxAge(0);
+                    temp.setPath("/");
+                    HttpContext.getResponse().addCookie(temp);
+                }
             }
         }
 
@@ -213,6 +219,20 @@ public class AuthServiceImpl implements AuthService {
             }
         }
         loginUser.setPermissions(permissionSet);
+
+        //如果开启了多租户功能，则设置当前登录用户的租户标识
+        if (ConstantsContext.getTenantOpen()) {
+            String tenantCode = TenantCodeHolder.get();
+            String dataBaseName = DataBaseNameHolder.get();
+            if (ToolUtil.isNotEmpty(tenantCode) && ToolUtil.isNotEmpty(dataBaseName)) {
+                loginUser.setTenantCode(tenantCode);
+                loginUser.setTenantDataSourceName(dataBaseName);
+            }
+
+            //注意，这里remove不代表所有情况，在aop remove
+            TenantCodeHolder.remove();
+            DataBaseNameHolder.remove();
+        }
 
         return loginUser;
     }

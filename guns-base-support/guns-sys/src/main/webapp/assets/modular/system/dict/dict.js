@@ -1,9 +1,11 @@
-layui.use(['table', 'ax', 'treetable', 'func'], function () {
+layui.use(['ax', 'treeTable', 'func'], function () {
     var $ = layui.$;
-    var table = layui.table;
     var $ax = layui.ax;
-    var treetable = layui.treetable;
+    var treeTable = layui.treeTable;
     var func = layui.func;
+
+    //table的初始化实例
+    var insTb;
 
     /**
      * 基础字典管理
@@ -16,14 +18,13 @@ layui.use(['table', 'ax', 'treetable', 'func'], function () {
      * 初始化表格的列
      */
     Dict.initColumn = function () {
-        return [[
+        return [
             {type: 'checkbox'},
-            {field: 'dictId', align: "center", hide: true, title: '字典id'},
-            {field: 'name', align: "center", sort: true, title: '字典名称'},
-            {field: 'code', align: "center", sort: true, title: '字典编码'},
-            {field: 'description', align: "center", sort: true, title: '字典的描述'},
+            {field: 'name', align: "center", title: '字典名称'},
+            {field: 'code', align: "center", title: '字典编码'},
+            {field: 'description', align: "center", title: '字典的描述'},
             {
-                field: 'status', align: "center", sort: true, title: '状态', templet: function (d) {
+                field: 'status', align: "center", title: '状态', templet: function (d) {
                     if (d.status === 'ENABLE') {
                         return "启用";
                     } else {
@@ -33,7 +34,7 @@ layui.use(['table', 'ax', 'treetable', 'func'], function () {
             },
             {field: 'createTime', align: "center", sort: true, title: '创建时间'},
             {align: 'center', toolbar: '#tableBar', title: '操作'}
-        ]];
+        ];
     };
 
     /**
@@ -100,24 +101,29 @@ layui.use(['table', 'ax', 'treetable', 'func'], function () {
      * 渲染表格
      */
     Dict.initTable = function (dictId, data) {
-        return treetable.render({
+        return treeTable.render({
             elem: '#' + dictId,
-            url: Feng.ctxPath + '/dict/list?dictTypeId=' + $("#dictTypeId").val(),
-            where: data,
+            tree: {
+                iconIndex: 1,           // 折叠图标显示在第几列
+                idName: 'dictId',         // 自定义id字段的名称
+                pidName: 'parentId',       // 自定义标识是否还有子节点的字段名称
+                haveChildName: 'haveChild',  // 自定义标识是否还有子节点的字段名称
+                isPidData: true         // 是否是pid形式数据
+            },
             height: "full-98",
-            cellMinWidth: 100,
             cols: Dict.initColumn(),
-            page: false,
-            treeColIndex: 2,
-            treeSpid: "0",
-            treeIdName: 'dictId',
-            treePidName: 'parentId',
-            treeDefaultClose: false,
-            treeLinkage: true
+            reqData: function (data, callback) {
+                var ajax = new $ax(Feng.ctxPath + '/dict/list?dictTypeId=' + $("#dictTypeId").val(), function (res) {
+                    callback(res.data);
+                }, function (res) {
+                    Feng.error("删除失败!" + res.responseJSON.message + "!");
+                });
+                ajax.start();
+            }
         });
     };
 
-    Dict.initTable(Dict.tableId);
+    insTb = Dict.initTable(Dict.tableId);
 
     // 搜索按钮点击事件
     $('#btnSearch').click(function () {
@@ -140,7 +146,7 @@ layui.use(['table', 'ax', 'treetable', 'func'], function () {
     });
 
     // 工具条点击事件
-    table.on('tool(' + Dict.tableId + ')', function (obj) {
+    treeTable.on('tool(' + Dict.tableId + ')', function (obj) {
         var data = obj.data;
         var layEvent = obj.event;
 

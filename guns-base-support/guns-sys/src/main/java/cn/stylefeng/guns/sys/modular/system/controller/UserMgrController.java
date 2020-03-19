@@ -33,19 +33,23 @@ import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.guns.sys.modular.system.warpper.UserWrapper;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.datascope.DataScope;
-import cn.stylefeng.roses.core.reqres.response.ResponseData;
-import cn.stylefeng.roses.core.reqres.response.SuccessResponseData;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.exception.RequestEmptyException;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
+import cn.stylefeng.roses.kernel.model.response.ResponseData;
+import cn.stylefeng.roses.kernel.model.response.SuccessResponseData;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.io.File;
 import java.util.Map;
 import java.util.UUID;
@@ -58,6 +62,7 @@ import java.util.UUID;
  */
 @Controller
 @RequestMapping("/mgr")
+@Validated
 public class UserMgrController extends BaseController {
 
     private static String PREFIX = "/modular/system/user/";
@@ -96,9 +101,6 @@ public class UserMgrController extends BaseController {
     @Permission
     @RequestMapping("/role_assign")
     public String roleAssign(@RequestParam Long userId, Model model) {
-        if (ToolUtil.isEmpty(userId)) {
-            throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
-        }
         model.addAttribute("userId", userId);
         return PREFIX + "user_roleassign.html";
     }
@@ -112,9 +114,6 @@ public class UserMgrController extends BaseController {
     @Permission
     @RequestMapping("/user_edit")
     public String userEdit(@RequestParam Long userId) {
-        if (ToolUtil.isEmpty(userId)) {
-            throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
-        }
         User user = this.userService.getById(userId);
         LogObjectHolder.me().set(user);
         return PREFIX + "user_edit.html";
@@ -146,10 +145,8 @@ public class UserMgrController extends BaseController {
      */
     @RequestMapping("/changePwd")
     @ResponseBody
-    public Object changePwd(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword) {
-        if (ToolUtil.isOneEmpty(oldPassword, newPassword)) {
-            throw new RequestEmptyException();
-        }
+    public Object changePwd(@RequestParam("oldPassword") @NotBlank String oldPassword,
+                            @RequestParam("newPassword") @Length(min = 6, max = 12) String newPassword) {
         this.userService.changePwd(oldPassword, newPassword);
         return SUCCESS_TIP;
     }
@@ -199,7 +196,7 @@ public class UserMgrController extends BaseController {
     @BussinessLog(value = "添加管理员", key = "account", dict = UserDict.class)
     @Permission(Const.ADMIN_NAME)
     @ResponseBody
-    public ResponseData add(UserDto user) {
+    public ResponseData add(@Valid UserDto user) {
         this.userService.addUser(user);
         return SUCCESS_TIP;
     }
@@ -326,10 +323,8 @@ public class UserMgrController extends BaseController {
     @BussinessLog(value = "分配角色", key = "userId,roleIds", dict = UserDict.class)
     @Permission(Const.ADMIN_NAME)
     @ResponseBody
-    public ResponseData setRole(@RequestParam("userId") Long userId, @RequestParam("roleIds") String roleIds) {
-        if (ToolUtil.isOneEmpty(userId, roleIds)) {
-            throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
-        }
+    public ResponseData setRole(@RequestParam("userId") Long userId,
+                                @RequestParam("roleIds") @NotBlank String roleIds) {
         //不能修改超级管理员
         if (userId.equals(Const.ADMIN_ID)) {
             throw new ServiceException(BizExceptionEnum.CANT_CHANGE_ADMIN);

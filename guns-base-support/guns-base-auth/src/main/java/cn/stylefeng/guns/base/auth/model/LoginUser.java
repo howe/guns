@@ -17,11 +17,13 @@ package cn.stylefeng.guns.base.auth.model;
 
 import cn.stylefeng.roses.core.util.ToolUtil;
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 当前登录用户信息
@@ -105,12 +107,11 @@ public class LoginUser implements UserDetails, Serializable {
     private String tenantDataSourceName;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        ArrayList<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+    public List<MyRole> getAuthorities() {
+        ArrayList<MyRole> grantedAuthorities = new ArrayList<>();
         if (ToolUtil.isNotEmpty(this.roleNames)) {
             for (String roleName : this.roleNames) {
-                GrantedAuthority grantedAuthority = (GrantedAuthority) () -> roleName;
-                grantedAuthorities.add(grantedAuthority);
+                grantedAuthorities.add(new MyRole(roleName));
             }
         }
         return grantedAuthorities;

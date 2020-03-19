@@ -22,19 +22,17 @@ import cn.stylefeng.guns.base.pojo.page.LayuiPageFactory;
 import cn.stylefeng.guns.sys.core.constant.dictmap.DeleteDict;
 import cn.stylefeng.guns.sys.core.constant.dictmap.NoticeMap;
 import cn.stylefeng.guns.sys.core.constant.factory.ConstantFactory;
-import cn.stylefeng.guns.sys.core.exception.enums.BizExceptionEnum;
 import cn.stylefeng.guns.sys.core.log.LogObjectHolder;
 import cn.stylefeng.guns.sys.modular.system.entity.Notice;
 import cn.stylefeng.guns.sys.modular.system.service.NoticeService;
 import cn.stylefeng.guns.sys.modular.system.warpper.NoticeWrapper;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.util.ToolUtil;
-import cn.stylefeng.roses.kernel.model.exception.ServiceException;
+import cn.stylefeng.roses.kernel.model.exception.RequestEmptyException;
+import cn.stylefeng.roses.kernel.model.response.ResponseData;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -85,12 +83,23 @@ public class NoticeController extends BaseController {
      * @author fengshuonan
      * @Date 2018/12/23 6:06 PM
      */
-    @RequestMapping("/notice_update/{noticeId}")
-    public String noticeUpdate(@PathVariable Long noticeId, Model model) {
-        Notice notice = this.noticeService.getById(noticeId);
-        model.addAllAttributes(BeanUtil.beanToMap(notice));
-        LogObjectHolder.me().set(notice);
+    @RequestMapping("/notice_update")
+    public String noticeUpdate() {
         return PREFIX + "notice_edit.html";
+    }
+
+    /**
+     * 获取通知详情
+     *
+     * @author fengshuonan
+     * @Date 2019/8/26 18:14
+     */
+    @RequestMapping("/detail")
+    @ResponseBody
+    public ResponseData noticeDetail(Long noticeId) {
+        Notice notice = this.noticeService.getById(noticeId);
+        Map<String, Object> noticeMap = BeanUtil.beanToMap(notice);
+        return ResponseData.success(noticeMap);
     }
 
     /**
@@ -118,7 +127,7 @@ public class NoticeController extends BaseController {
     @BussinessLog(value = "新增通知", key = "title", dict = NoticeMap.class)
     public Object add(Notice notice) {
         if (ToolUtil.isOneEmpty(notice, notice.getTitle(), notice.getContent())) {
-            throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
+            throw new RequestEmptyException("通知标题或内容为空");
         }
         notice.setCreateUser(LoginContextHolder.getContext().getUserId());
         notice.setCreateTime(new Date());
@@ -156,7 +165,7 @@ public class NoticeController extends BaseController {
     @BussinessLog(value = "修改通知", key = "title", dict = NoticeMap.class)
     public Object update(Notice notice) {
         if (ToolUtil.isOneEmpty(notice, notice.getNoticeId(), notice.getTitle(), notice.getContent())) {
-            throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
+            throw new RequestEmptyException("通知标题或内容为空");
         }
         Notice old = this.noticeService.getById(notice.getNoticeId());
         old.setTitle(notice.getTitle());

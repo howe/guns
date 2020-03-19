@@ -49,6 +49,12 @@ public class MenuWrapper extends BaseControllerWrapper {
                 map.put("isMenuName", value.getDesc());
             }
         }
+
+        //删除虚拟的父节点
+        if (map.get("pcode").equals("0")) {
+            map.remove("pcode");
+        }
+
     }
 
 }

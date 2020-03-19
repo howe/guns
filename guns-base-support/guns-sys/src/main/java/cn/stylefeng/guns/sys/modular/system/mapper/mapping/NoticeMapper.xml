@@ -28,13 +28,4 @@
         order by create_time DESC
     </select>
 
-    <select id="list" resultType="map" databaseId="oracle">
-        select
-        <include refid="Base_Column_List"></include>
-        from sys_notice
-        <if test="condition != null and condition != ''">
-            where title like '%' || #{condition} || '%' or content like '%' || #{condition} || '%'
-        </if>
-        order by create_time DESC
-    </select>
 </mapper>

@@ -9,6 +9,8 @@ import cn.stylefeng.guns.sys.core.constant.factory.ConstantFactory;
 import cn.stylefeng.guns.sys.core.constant.state.MenuStatus;
 import cn.stylefeng.guns.sys.core.exception.enums.BizExceptionEnum;
 import cn.stylefeng.guns.sys.core.listener.ConfigListener;
+import cn.stylefeng.guns.base.i18n.context.UserTranslationContext;
+import cn.stylefeng.guns.base.i18n.enums.TranslationEnum;
 import cn.stylefeng.guns.sys.modular.system.entity.Menu;
 import cn.stylefeng.guns.sys.modular.system.mapper.MenuMapper;
 import cn.stylefeng.guns.sys.modular.system.model.MenuDto;
@@ -259,6 +261,15 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
         //给所有的菜单url加上ctxPath
         for (MenuNode menuItem : menus) {
             menuItem.setUrl(ConfigListener.getConf().get("contextPath") + menuItem.getUrl());
+
+            //如果是当前用户选择语言是中文，则返回菜单名字，而不是字典名字
+            if (UserTranslationContext.getUserCurrentTrans().equals(TranslationEnum.CHINESE)) {
+                continue;
+            } else {
+                //将菜单进行多语言翻译
+                String transName = UserTranslationContext.get("MENU_" + menuItem.getCode().toUpperCase());
+                menuItem.setName(transName);
+            }
         }
 
         return menus;
@@ -333,14 +344,6 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
                 }
             }
         }
-
-        //创建根节点
-        Menu menu = new Menu();
-        menu.setMenuId(-1L);
-        menu.setName("根节点");
-        menu.setCode("0");
-        menu.setPcode("-2");
-        maps.add(BeanUtil.beanToMap(menu));
 
         return maps;
     }

@@ -25,8 +25,8 @@ import cn.stylefeng.guns.sys.modular.system.entity.OperationLog;
 import cn.stylefeng.guns.sys.modular.system.service.OperationLogService;
 import cn.stylefeng.guns.sys.modular.system.warpper.LogWrapper;
 import cn.stylefeng.roses.core.base.controller.BaseController;
+import cn.stylefeng.roses.core.data.SqlExe;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.toolkit.SqlRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -114,7 +114,7 @@ public class LogController extends BaseController {
     @Permission(Const.ADMIN_NAME)
     @ResponseBody
     public Object delLog() {
-        SqlRunner.db().delete("delete from sys_operation_log");
+        SqlExe.delete("delete from sys_operation_log", null);
         return SUCCESS_TIP;
     }
 }

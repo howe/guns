@@ -36,12 +36,9 @@
 
 ### 在线demo
 * 账号密码：admin/111111，地址：http://demo.stylefeng.cn
-* 2019开源软件评选，请为Guns投票！ [点我投票](https://www.oschina.net/project/top_cn_2019#guns)
 
 ### 最新免费教程
 [https://www.bilibili.com/video/av56718207](https://www.bilibili.com/video/av56718207)
-
-配套课件：[https://gitee.com/stylefeng/Guns-Guide](https://gitee.com/stylefeng/Guns-Guide)
 
 ### 扫码关注官方公众号和官方微信群
 <table>
@@ -53,23 +50,22 @@
     </tr>
 </table>
 
-### 最新6.0更新内容如下(更新日期2019.10.25)
+### 最新6.1更新内容如下(更新日期2020.3.19)
 
-1. 前端框架升级easyweb 3.1.5，layui升级2.5.5。
-2. 优化整体前端UI界面，更加简洁，大气。
-3. 抽象出一套权限模型，利用接口进行权限控制和调用规则，方便在权限控制方面进行拓展。
-4. 替换掉了以往的ShiroKit，采用LoginContextHolder.getContext().getUser()获取当前登录用户。
-5. 权限框架替换为spring security + jwt，采用令牌登录方式，更加灵活可拓展，同时方便对接多系统SSO。
-6. 新增常量容器模型，对系统变量，常量，以及用户自定义的一些参数进行在线维护，在线刷新参数值，无需重启。
-7. 系统的验证码开关，顶部导航栏开关，系统默认密码等在常量容器进行维护，极大方便了系统使用。
-8. 所有页面加载的css和js进行版本控制，当升级项目时，更新对应版本号，可控制浏览器对缓存js和css的刷新。
-9. 增加用户的职务管理，可对用户进行职务绑定。
+1. 重构项目模块结构，修复若干bug
+2. 重新调整项目整体的异常拦截，异常返回提示信息更加丰富
+3. 更新登录页面，增加锁屏界面
+4. 增加在线数据源配置功能，使用多数据源更加方便
+5. 升级核心包版本到v2.2.12
+6. 升级easyweb框架版本v3.1.7
+7. 完善通知页面的富文本框，采用ueditor
+8. 更新主题界面样式
 
 ### Guns版本说明
 
 | 版本名称 | 说明 | 地址 |
 | :---: | :---: | :---: |
-| Guns v6.0 | 最新开源版本，采用layui | https://gitee.com/stylefeng/guns |
+| Guns v6.1 | 最新开源版本，采用layui | https://gitee.com/stylefeng/guns |
 | Guns v5.1 | Guns经典版的最新版，采用bootstrap 3 | https://gitee.com/stylefeng/guns/tree/v5.1-final |
 
 ### Guns 企业版
@@ -191,38 +187,6 @@ jwt token鉴权机制是指若需要请求服务器接口，必须通过AuthCont
 
 ### 签名机制
 签名机制是指客户端向服务端传输数据中，对传输数据进行md5加密，并且加密过程中利用Auth接口返回的随机字符串进行混淆加密，并把md5值同时附带给服务端，服务端通获取数据之后对数据再进行一次md5加密，若加密结果和客户端传来的数据一致，则认定客户端请求的数据是没有被篡改的，若不一致，则认为被加密的数据是被篡改的
-
-### Guns经典版效果图
-<table>
-    <tr>
-        <td><img src="https://git.oschina.net/uploads/images/2017/0604/194616_36ed7fd6_551203.png"/></td>
-        <td><img src="https://git.oschina.net/uploads/images/2017/0604/194623_a0761bc3_551203.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://git.oschina.net/uploads/images/2017/0604/194630_640dfd35_551203.png"/></td>
-        <td><img src="https://git.oschina.net/uploads/images/2017/0526/104015_bdb14c74_551203.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://git.oschina.net/uploads/images/2017/0516/000735_b83c5c46_551203.png"/></td>
-        <td><img src="https://git.oschina.net/uploads/images/2017/0526/103734_bd3e8f6b_551203.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://git.oschina.net/uploads/images/2017/0604/194539_f9bb482a_551203.png"/></td>
-        <td><img src="https://git.oschina.net/uploads/images/2017/0526/103746_6b4129ed_551203.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://git.oschina.net/uploads/images/2017/0526/103755_7729b916_551203.png"/></td>
-        <td><img src="https://git.oschina.net/uploads/images/2017/0526/103801_b8216865_551203.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://git.oschina.net/uploads/images/2017/0526/103807_20bfb868_551203.png"/></td>
-        <td><img src="https://git.oschina.net/uploads/images/2017/0526/103814_67e078bb_551203.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://git.oschina.net/uploads/images/2017/0526/103822_58fd5d91_551203.png"/></td>
-        <td><img src="https://git.oschina.net/uploads/images/2017/0526/103827_d6218c74_551203.png"/></td>
-    </tr>
-</table>
 
 ### stylefeng开源技术
 

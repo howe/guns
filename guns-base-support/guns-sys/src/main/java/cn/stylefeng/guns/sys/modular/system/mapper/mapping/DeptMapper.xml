@@ -35,18 +35,6 @@
 		) as "spread" from sys_dept
 	</select>
 
-    <select id="layuiTree" resultType="cn.stylefeng.guns.base.pojo.node.LayuiTreeNode" databaseId="oracle">
-		select dept_id AS id, pid as "pid", simple_name as title,
-		(
-		CASE
-		WHEN (pid = 0 OR pid IS NULL) THEN
-		'1'
-		ELSE
-		'0'
-		END
-		) as "spread" from sys_dept
-	</select>
-
     <select id="tree" resultType="cn.stylefeng.guns.base.pojo.node.ZTreeNode">
 		select dept_id AS id, pid as "pId", simple_name as name,
 		(
@@ -55,18 +43,6 @@
 		'true'
 		ELSE
 		'false'
-		END
-		) as "open" from sys_dept
-	</select>
-
-    <select id="tree" resultType="cn.stylefeng.guns.base.pojo.node.ZTreeNode" databaseId="oracle">
-		select dept_id AS id, pid as "pId", simple_name as name,
-		(
-		CASE
-		WHEN (pid = 0 OR pid IS NULL) THEN
-		'1'
-		ELSE
-		'0'
 		END
 		) as "open" from sys_dept
 	</select>
@@ -84,19 +60,6 @@
         order by sort ASC
     </select>
 
-    <select id="list" resultType="map" databaseId="oracle">
-        select
-        <include refid="Base_Column_List"/>
-        from sys_dept where 1 = 1
-        <if test="condition != null and condition != ''">
-            and simple_name like ('%' || #{condition} || '%') or full_name like ('%' || #{condition} || '%')
-        </if>
-        <if test="deptId != null and deptId != ''">
-            and (dept_id = #{deptId} or dept_id in ( select dept_id from sys_dept where pids like '%[' ||  #{deptId} || ']%' ))
-        </if>
-        order by sort ASC
-    </select>
-
     <select id="treeviewNodes" resultType="cn.stylefeng.guns.base.pojo.node.TreeviewNode">
         select dept_id AS tags, pid as "parentId", simple_name as text from sys_dept
     </select>
@@ -107,15 +70,6 @@
         from sys_dept where 1 = 1
         <if test="deptId != null and deptId != ''">
             and pids LIKE CONCAT('%$[',#{deptId},'$]%') escape '$'
-        </if>
-    </select>
-
-    <select id="likePids" resultType="cn.stylefeng.guns.sys.modular.system.entity.Dept" databaseId="oracle">
-        select
-        <include refid="Base_Column_List"/>
-        from sys_dept where 1 = 1
-        <if test="deptId != null and deptId != ''">
-            and pids LIKE '%[' || #{deptId} || ']%'
         </if>
     </select>
 

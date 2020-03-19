@@ -31,16 +31,6 @@
         order by sort asc
     </select>
 
-    <select id="selectRoles" resultType="map" databaseId="oracle">
-        select
-        <include refid="Base_Column_List"/>
-        from sys_role
-        <if test="condition != null">
-            where name like '%' || #{condition} || '%'
-        </if>
-        order by sort asc
-    </select>
-
     <delete id="deleteRolesById">
 		delete from sys_relation where role_id = #{roleId}
 	</delete>
@@ -49,12 +39,6 @@
 		select role_id AS id, pid as "pId",
 		name as name, (case when (pid = 0 or pid is null) then 'true'
 		else 'false' end) as "open" from sys_role
-	</select>
-
-    <select id="roleTreeList" resultType="cn.stylefeng.guns.base.pojo.node.ZTreeNode" databaseId="oracle">
-		select role_id AS id, pid as "pId",
-		name as name, (case when (pid = 0 or pid is null) then '1'
-		else '0' end) as "open" from sys_role
 	</select>
 
     <select id="roleTreeListByRoleId" resultType="cn.stylefeng.guns.base.pojo.node.ZTreeNode">
@@ -96,45 +80,6 @@
         ORDER BY pid,sort ASC
     </select>
 
-    <select id="roleTreeListByRoleId" resultType="cn.stylefeng.guns.base.pojo.node.ZTreeNode" databaseId="oracle">
-        SELECT
-        r.role_id as id,
-        pid as "pId",
-        name AS "name",
-        (
-        CASE
-        WHEN (pid = 0 OR pid IS NULL) THEN
-        '1'
-        ELSE
-        '0'
-        END
-        ) as "open",
-        (
-        CASE
-        WHEN (r1.role_id = 0 OR r1.role_id IS NULL) THEN
-        '0'
-        ELSE
-        '1'
-        END
-        ) as "checked"
-        FROM
-        sys_role r
-        LEFT JOIN (
-        SELECT
-        role_id
-        FROM
-        sys_role
-        WHERE
-        role_id IN
-
-        <foreach collection="array" index="index" item="i" open="(" separator="," close=")">
-            #{i}
-        </foreach>
-
-        ) r1 ON r.role_id = r1.role_id
-        ORDER BY pid,sort ASC
-    </select>
-
     <select id="listRole" resultType="map">
         select
         role_id as id,
@@ -144,7 +89,6 @@
         where 1=1
         <if test="name != null and name != ''">
             and name LIKE CONCAT('%', #{name},'%')
-
         </if>
     </select>
 

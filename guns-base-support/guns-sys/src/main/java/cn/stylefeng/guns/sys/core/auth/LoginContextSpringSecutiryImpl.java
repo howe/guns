@@ -5,6 +5,7 @@ import cn.stylefeng.guns.base.auth.exception.AuthException;
 import cn.stylefeng.guns.base.auth.exception.enums.AuthExceptionEnum;
 import cn.stylefeng.guns.base.auth.model.LoginUser;
 import cn.stylefeng.guns.base.consts.ConstantsContext;
+import cn.stylefeng.guns.sys.core.auth.util.TokenUtil;
 import cn.stylefeng.guns.sys.core.constant.Const;
 import cn.stylefeng.guns.sys.core.constant.factory.ConstantFactory;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -34,7 +35,7 @@ public class LoginContextSpringSecutiryImpl implements LoginContext {
 
     @Override
     public String getToken() {
-        return null;
+        return TokenUtil.getToken();
     }
 
     @Override
@@ -83,10 +84,12 @@ public class LoginContextSpringSecutiryImpl implements LoginContext {
     @Override
     public boolean isAdmin() {
         List<Long> roleList = getUser().getRoleList();
-        for (Long integer : roleList) {
-            String singleRoleTip = ConstantFactory.me().getSingleRoleTip(integer);
-            if (singleRoleTip.equals(Const.ADMIN_NAME)) {
-                return true;
+        if(roleList != null){
+            for (Long integer : roleList) {
+                String singleRoleTip = ConstantFactory.me().getSingleRoleTip(integer);
+                if (singleRoleTip.equals(Const.ADMIN_NAME)) {
+                    return true;
+                }
             }
         }
         return false;

@@ -99,7 +99,7 @@ public class LogTaskFactory {
         };
     }
 
-    public static TimerTask exceptionLog(final Long userId, final Exception exception) {
+    public static TimerTask exceptionLog(final Long userId, final Throwable exception) {
         return new TimerTask() {
             @Override
             public void run() {

@@ -38,11 +38,11 @@
 
     </ul>
     <ul class="layui-nav layui-layout-right">
-        <li class="layui-nav-item" lay-unselect>
-            <a ew-event="message" title="消息"><i class="layui-icon layui-icon-notice"></i></a>
-        </li>
         <li class="layui-nav-item layui-hide-xs" lay-unselect>
             <a ew-event="fullScreen" title="全屏"><i class="layui-icon layui-icon-screen-full"></i></a>
+        </li>
+        <li class="layui-nav-item layui-hide-xs" lay-unselect>
+            <a ew-event="lockScreen" title="锁屏" data-url="${ctxPath}/system/lock"><i class="layui-icon layui-icon-password"></i></a>
         </li>
         <li class="layui-nav-item" lay-unselect>
             <a>
@@ -51,19 +51,21 @@
             </a>
             <dl class="layui-nav-child">
                 <dd lay-unselect>
-                    <a ew-href="${ctxPath}/system/user_info">个人信息</a>
+                    <a ew-href="${ctxPath}/system/user_info">${lang.get("MENU_PERSONAL_INFO","个人中心")}</a>
                 </dd>
                 <dd lay-unselect>
-                    <a id="setPsw">修改密码</a>
+                    <a id="setPsw">${lang.get("MENU_CHANGE_PASSWORD","修改密码")}</a>
                 </dd>
                 <hr>
+                <div id="languageDiv"></div>
+                <hr>
                 <dd lay-unselect>
-                    <a id="btnLogout">退出</a>
+                    <a id="btnLogout">${lang.get("MENU_LOGOUT","退出")}</a>
                 </dd>
             </dl>
         </li>
         <li class="layui-nav-item" lay-unselect>
-            <a ew-event="theme" title="主题"><i class="layui-icon layui-icon-more-vertical"></i></a>
+            <a ew-event="theme" title="主题" data-url="${ctxPath}/system/theme"><i class="layui-icon layui-icon-more-vertical"></i></a>
         </li>
     </ul>
 </div>

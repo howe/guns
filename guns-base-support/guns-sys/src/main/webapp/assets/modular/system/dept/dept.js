@@ -60,7 +60,10 @@ layui.use(['table', 'admin', 'ax', 'ztree', 'func', 'tree'], function () {
             height: 530,
             title: '添加部门',
             content: Feng.ctxPath + '/dept/dept_add',
-            tableId: Dept.tableId
+            tableId: Dept.tableId,
+            endCallback: function () {
+                Dept.loadDeptTree();
+            }
         });
     };
 
@@ -74,7 +77,10 @@ layui.use(['table', 'admin', 'ax', 'ztree', 'func', 'tree'], function () {
             height: 530,
             title: '编辑部门',
             content: Feng.ctxPath + "/dept/dept_update?deptId=" + data.deptId,
-            tableId: Dept.tableId
+            tableId: Dept.tableId,
+            endCallback: function () {
+                Dept.loadDeptTree();
+            }
         });
     };
 
@@ -100,6 +106,10 @@ layui.use(['table', 'admin', 'ax', 'ztree', 'func', 'tree'], function () {
             var ajax = new $ax(Feng.ctxPath + "/dept/delete", function () {
                 Feng.success("删除成功!");
                 table.reload(Dept.tableId);
+
+                //左侧树加载
+                Dept.loadDeptTree();
+
             }, function (data) {
                 Feng.error("删除失败!" + data.responseJSON.message + "!");
             });
@@ -107,6 +117,22 @@ layui.use(['table', 'admin', 'ax', 'ztree', 'func', 'tree'], function () {
             ajax.start();
         };
         Feng.confirm("是否删除部门 " + data.simpleName + "?", operation);
+    };
+
+    /**
+     * 左侧树加载
+     */
+    Dept.loadDeptTree = function () {
+        var ajax = new $ax(Feng.ctxPath + "/dept/layuiTree", function (data) {
+            tree.render({
+                elem: '#deptTree',
+                data: data,
+                click: Dept.onClickDept,
+                onlyIconControl: true
+            });
+        }, function (data) {
+        });
+        ajax.start();
     };
 
     // 渲染表格
@@ -120,16 +146,7 @@ layui.use(['table', 'admin', 'ax', 'ztree', 'func', 'tree'], function () {
     });
 
     //初始化左侧部门树
-    var ajax = new $ax(Feng.ctxPath + "/dept/layuiTree", function (data) {
-        tree.render({
-            elem: '#deptTree',
-            data: data,
-            click: Dept.onClickDept,
-            onlyIconControl: true
-        });
-    }, function (data) {
-    });
-    ajax.start();
+    Dept.loadDeptTree();
 
     // 搜索按钮点击事件
     $('#btnSearch').click(function () {

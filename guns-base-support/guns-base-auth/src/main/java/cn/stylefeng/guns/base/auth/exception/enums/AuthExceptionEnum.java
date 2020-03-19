@@ -24,9 +24,12 @@ public enum AuthExceptionEnum implements AbstractBaseExceptionEnum {
 
     VALID_CODE_ERROR(1406, "验证码错误"),
 
-    NO_PERMISSION(1500, "没有权限访问资源"),
+    //用在PermissonException
+    NO_PERMISSION(1500, "登录已过期，请重新登录"),
 
-    SESSION_TIMEOUT(1501, "登录会话超时");
+    NO_PAGE_ERROR(1502, "请求接口不存在或用户未登录"),
+
+    LOGIN_TIMEOUT(409, "登录超时，请重新登录！");
 
     AuthExceptionEnum(int code, String message) {
         this.code = code;

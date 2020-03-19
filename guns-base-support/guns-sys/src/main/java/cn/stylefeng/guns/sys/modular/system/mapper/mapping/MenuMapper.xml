@@ -45,22 +45,6 @@
         </if>
     </select>
 
-    <select id="selectMenus" resultType="map" databaseId="oracle">
-        select
-        <include refid="Base_Column_List"/>
-        from sys_menu
-        where status = 'ENABLE'
-        <if test="condition != null and condition != ''">
-            and (name like '%' || #{condition} || '%' or code like '%' || #{condition} || '%')
-        </if>
-        <if test="level != null and level != ''">
-            and levels = #{level}
-        </if>
-        <if test="menuId != null and menuId != 0">
-            and (menu_id = #{menuId} or menu_id in ( select menu_id from sys_menu where pcodes like '%[' || #{code} ']%' ))
-        </if>
-    </select>
-
     <select id="getMenuIdsByRoleId" resultType="long">
         select menu_id from
         sys_relation where role_id = #{roleId}
@@ -85,34 +69,6 @@
         'true'
         ELSE
         'false'
-        END
-        ) as "open"
-        FROM
-        sys_menu m1
-        LEFT join sys_menu m2 ON m1.pcode = m2.code
-        ORDER BY
-        m1.menu_id ASC
-    </select>
-
-    <select id="menuTreeList" resultType="cn.stylefeng.guns.base.pojo.node.ZTreeNode" databaseId="oracle">
-        SELECT
-        m1.menu_id AS id,
-        (
-        CASE
-        WHEN (m2.menu_id = 0 OR m2.menu_id IS NULL) THEN
-        0
-        ELSE
-        m2.menu_id
-        END
-        ) AS pId,
-        m1.name
-        AS name,
-        (
-        CASE
-        WHEN (m2.menu_id = 0 OR m2.menu_id IS NULL) THEN
-        '1'
-        ELSE
-        '0'
         END
         ) as "open"
         FROM
@@ -150,57 +106,6 @@
         'false'
         ELSE
         'true'
-        END
-        ) as "checked"
-        FROM
-        sys_menu m1
-        LEFT JOIN
-        sys_menu m2
-        ON m1.pcode = m2.code
-        left join (
-        SELECT
-        menu_id
-        FROM
-        sys_menu
-        WHERE
-        menu_id IN
-        <foreach collection="list" index="index" item="i" open="("
-                 separator="," close=")">
-            #{i}
-        </foreach>
-        ) m3 on m1.menu_id = m3.menu_id
-        ORDER BY
-        m1.menu_id ASC
-    </select>
-
-    <select id="menuTreeListByMenuIds" resultType="cn.stylefeng.guns.base.pojo.node.ZTreeNode" databaseId="oracle">
-        SELECT
-        m1.menu_id AS id,
-        (
-        CASE
-        WHEN (m2.menu_id = 0 OR m2.menu_id IS NULL) THEN
-        0
-        ELSE
-        m2.menu_id
-        END
-        ) AS "pId",
-        m1.name AS name,
-        (
-        CASE
-        WHEN (m2.menu_id = 0 OR m2.menu_id IS
-        NULL) THEN
-        '1'
-        ELSE
-        '0'
-        END
-        ) as "open",
-        (
-        CASE
-        WHEN (m3.menu_id = 0 OR m3.menu_id
-        IS NULL) THEN
-        '0'
-        ELSE
-        '1'
         END
         ) as "checked"
         FROM
@@ -292,34 +197,12 @@
         </if>
     </select>
 
-    <select id="selectMenuTree" resultType="java.util.Map" databaseId="oracle">
-        select
-        <include refid="Base_Column_List"/>
-        from sys_menu
-        where status = 'ENABLE'
-        <if test="condition != null and condition != ''">
-            and (name like '%' || #{condition} || '%' or code like '%' || #{condition} || '%')
-        </if>
-        <if test="level != null and level != ''">
-            and levels = #{level}
-        </if>
-    </select>
-
     <select id="getMenusLikePcodes" resultType="cn.stylefeng.guns.sys.modular.system.entity.Menu">
         select
         <include refid="Base_Column_List"></include>
         from sys_menu where 1 = 1
         <if test="code != null and code != ''">
             and pcodes LIKE CONCAT('%$[',#{code},'$]%') escape '$'
-        </if>
-    </select>
-
-    <select id="getMenusLikePcodes" resultType="cn.stylefeng.guns.sys.modular.system.entity.Menu" databaseId="oracle">
-        select
-        <include refid="Base_Column_List"></include>
-        from sys_menu where 1 = 1
-        <if test="code != null and code != ''">
-            and pcodes LIKE '%[' || #{code} || ']%'
         </if>
     </select>
 

@@ -29,12 +29,12 @@ import cn.stylefeng.guns.sys.modular.system.service.FileInfoService;
 import cn.stylefeng.guns.sys.modular.system.service.NoticeService;
 import cn.stylefeng.guns.sys.modular.system.service.UserService;
 import cn.stylefeng.roses.core.base.controller.BaseController;
-import cn.stylefeng.roses.core.reqres.response.ResponseData;
-import cn.stylefeng.roses.core.reqres.response.SuccessResponseData;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.exception.RequestEmptyException;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import cn.stylefeng.roses.kernel.model.exception.enums.CoreExceptionEnum;
+import cn.stylefeng.roses.kernel.model.response.ResponseData;
+import cn.stylefeng.roses.kernel.model.response.SuccessResponseData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -141,6 +141,17 @@ public class SystemController extends BaseController {
     @RequestMapping("/theme")
     public String theme() {
         return "/modular/frame/theme.html";
+    }
+
+    /**
+     * 锁屏界面
+     *
+     * @author fengshuonan
+     * @Date 2020/3/8 17:19
+     */
+    @RequestMapping("/lock")
+    public String lock() {
+        return "/modular/frame/lock-screen.html";
     }
 
     /**
