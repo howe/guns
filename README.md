@@ -37,8 +37,8 @@
 ### 在线demo
 * 账号密码：admin/111111，地址：http://demo.stylefeng.cn
 
-### 最新免费教程
-[https://www.bilibili.com/video/av56718207](https://www.bilibili.com/video/av56718207)
+### 最新前后端分离架构Guns发布
+[https://gitee.com/stylefeng/guns-separation](https://gitee.com/stylefeng/guns-separation)
 
 ### 扫码关注官方公众号和官方微信群
 <table>
