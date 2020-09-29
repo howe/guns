@@ -37,6 +37,10 @@
 ### 在线demo
 * 账号密码：admin/111111，地址：http://demo.stylefeng.cn
 
+### 文档地址
+
+https://doc.stylefeng.cn/guns_layui/
+
 ### 最新前后端分离架构Guns发布
 [https://gitee.com/stylefeng/guns-separation](https://gitee.com/stylefeng/guns-separation)
 
