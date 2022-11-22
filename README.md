@@ -29,7 +29,7 @@
 
 ## 快速启动
 
-Guns v7.3.1前端启动详情见：[https://gitee.com/stylefeng/guns-vue3-admin](https://gitee.com/stylefeng/guns-vue3-admin)
+Guns v7.3.1前端启动详情见：[https://github.com/howe/guns-vue3-admin](https://github.com/howe/guns-vue3-admin)
 
 以下为后台启动的过程：
 
@@ -41,15 +41,6 @@ Guns v7.3.1前端启动详情见：[https://gitee.com/stylefeng/guns-vue3-admin]
 
 4. 初始化账号密码：admin/123456
 
-## 扫码关注官方公众号和官方微信群
-<table>
-    <tr>
-        <td>官方公众号</td>
-        <td><img src="https://images.gitee.com/uploads/images/2019/0415/104911_9bc924a5_551203.png" width="120"/></td>
-        <td>扫码邀请入群</td>
-        <td><img src="https://images.gitee.com/uploads/images/2019/0419/103622_d6e9fa5d_551203.png" width="120"/></td>
-    </tr>
-</table>
 
 ## 更新日志
 
@@ -69,7 +60,7 @@ Guns v7.3.1前端启动详情见：[https://gitee.com/stylefeng/guns-vue3-admin]
 
 devops功能以Jar包集成的方式集成到项目，Guns-DevOps功能不开放源码。
 
-1. [点此下载Guns私服库的maven settings.xml](https://gitee.com/stylefeng/guns/blob/master/_devops/settings.xml) 替换掉你的本地的maven配置文件。
+1. [点此下载Guns私服库的maven settings.xml](https://github.com/howe/guns/blob/master/_devops/settings.xml) 替换掉你的本地的maven配置文件。
 
 2. 在Guns项目的pom.xml中引入如下模块
 
@@ -102,11 +93,11 @@ Guns是一个现代化的Java应用开发框架，基于主流技术**Spring Boo
 
 **Guns v7.3.1**已经发布，前后端代码以及核心包源码，均可在如下Gitee仓库可找到：
 
-前端代码：[https://gitee.com/stylefeng/guns-vue3-admin](https://gitee.com/stylefeng/guns-vue3-admin)
+前端代码：[https://github.com/howe/guns-vue3-admin](https://github.com/howe/guns-vue3-admin)
 
-后端代码：[https://gitee.com/stylefeng/guns](https://gitee.com/stylefeng/guns)
+后端代码：[https://github.com/howe/guns](https://github.com/howe/guns)
 
-核心包：[https://gitee.com/stylefeng/roses](https://gitee.com/stylefeng/roses)
+核心包：[https://github.com/howe/roses](https://github.com/howe/roses)
 
 经过多年发展，Guns已在业界具有一定影响力。Guns技术架构可以直接应用到任何软件产品和技术公司自身的技术体系建设中，帮助企业解决**规范问题**，解决**复用问题**，解决**架构问题**。
 
@@ -164,21 +155,3 @@ Guns默认封装了很多功能插件，引用这些插件并使用相关接口�
 - 17.Demo拦截器
 - 18.消息插件
 - 19.持续更新...
-
-## Guns曾获荣誉
-
-*Gitee GVP最有价值开源项目。*
-
-*开源中国2018年度最受欢迎中国开源软件。*
-
-*开源中国2019年度最受欢迎中国开源软件。*
-
-*开源中国2020年度最受欢迎中国开源软件。*
-
-*开源中国2021年度最受欢迎中国开源软件。*
-
-*2021“科创中国”开源创新榜－－年度优秀开源产品。*
-
-![1-4](.README_images/1-4.png)
-
-![1-5](.README_images/1-5.png)
